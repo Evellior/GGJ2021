@@ -15,16 +15,20 @@ public class Player : MonoBehaviour
         private set;
     }
 
-    Player(uint id)
+    private Rigidbody rigidBody;
+
+    void Awake()
     {
         this.id = id;
         this.loot = 0;
         this.currentTool = ToolItem.Tool.Sledgehammer;
+
+        RegisterWithDisplays();
     }
 
-    void Awake()
+    void Start()
     {
-        RegisterWithDisplays();
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     void OnDestroy()
@@ -85,6 +89,20 @@ public class Player : MonoBehaviour
             {
                 Destroy(item.gameObject);
             }
+        }
+    }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        Vector2 moveVector = context.ReadValue<Vector2>();
+
+        if (moveVector.sqrMagnitude >= 0.15)
+        {
+            rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, 10.0f * new Vector3(moveVector.x, 0.0f, moveVector.y), 0.5f);
+        }
+        else
+        {
+            rigidBody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         }
     }
 }
