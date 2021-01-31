@@ -15,7 +15,9 @@ public class Player : MonoBehaviour
         private set;
     }
 
-    private Rigidbody rigidBody;
+    public Rigidbody rigidBody;
+
+    //private Vector2 ;
 
     void Awake()
     {
@@ -28,7 +30,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
     }
 
     void OnDestroy()
@@ -98,11 +99,12 @@ public class Player : MonoBehaviour
 
         if (moveVector.sqrMagnitude >= 0.15)
         {
-            rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, 10.0f * new Vector3(moveVector.x, 0.0f, moveVector.y), 0.5f);
+            rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, 50.0f * new Vector3(moveVector.x, 0.0f, moveVector.y), 0.5f);
+            //rigidBody.AddForce(/* May need to multiply by a scaling factor */ 1000f * new Vector3(moveVector.x, 0.0f, moveVector.y));
         }
         else
         {
             rigidBody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
-        }
+        }//*/
     }
 }
